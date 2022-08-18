@@ -19,16 +19,16 @@ function Cadastro () {
     const navigation = useNavigate()
     const [confirmPasswordType, setConfirmPasswordType ] = useState("password")
     const [login, setLogin ] = useState("")
-    const [senha, setSenha ] = useState("")
+    const [password, setPassword ] = useState("")
     const [confirmarSenha, setConfirmarSenha ] = useState("")
     const [logado, setLogado ] = useState(false)
 
     async function cadastrarUsu() {
 
-        if(!login || !senha || senha !== confirmarSenha){
+        if(!login || !password || password !== confirmarSenha){
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
+                title: 'Ah, não!',
                 text: 'Dados incorretos!',
               })
               return
@@ -37,8 +37,8 @@ function Cadastro () {
         try {
            let user = await api.post("/api/cadastrarUsuario",
             {
-                login,
-                senha
+                "login": login,
+                "password": password
             })
             if(logado === true){
                 localStorage.setItem("user", JSON.stringify(user.data)) //transforma os dados do user em Json e armazena no localStorage 
@@ -70,7 +70,7 @@ function Cadastro () {
                     <div>
                         <label>Sua senha</label>
                         {passwordType === "text" ? <VscEye size={15} color="#000" onClick={() => {setPasswordType("password")}}/>: <VscEyeClosed size={15} color="#000" onClick={() => {setPasswordType("text")}}/>}
-                        <input type={passwordType} value={senha } onChange={(e) => {setSenha(e.target.value)}}/>
+                        <input type={passwordType} value={password } onChange={(e) => {setPassword(e.target.value)}}/>
                     </div>
                     <div>
                         <label>Confirme sua senha</label>
